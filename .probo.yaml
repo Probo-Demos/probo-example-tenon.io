@@ -1,6 +1,6 @@
-image: proboci/ubuntu-16.04-lamp:php7.2-nightly
+image: proboci/ubuntu-16.04-lamp:php-7.2
 steps:
-  - name: Update composer
+  - name: Update composer.
     command: '/usr/local/bin/composer self-update'
   - name: Require drush 8.1.15. (Required for Drupal 8.4.5+)
     command: 'cd /src && composer global require drush/drush:8.1.15'
@@ -12,3 +12,10 @@ steps:
     profileName: standard
     clearCaches: false
     subDirectory: web
+  - name: Tenon.io test
+    plugin: Script
+    script: |
+      curl -X POST -H Content-Type:application/x-www-form-urlencoded -H Cache-Control:no-cache -d 'url='"$BUILD_DOMAIN"'&key=5af62f9909783f976e38fb8c6e2faffd' https://tenon.io/api/ > /src/web/response.json
+      echo "View response file at $BUILD_DOMAIN/response.json"
+      RESPONSE_ID=`curl -s $BUILD_DOMAIN/response.json | sed -e 's/[{}]/''/g' | awk -v RS=',"' -F: '/^responseID/ {print $2}' | tr -d '"'`
+      echo "View Accessibility report on Tenon.io, https://tenon.io/history.php?responseID=$RESPONSE_ID"
