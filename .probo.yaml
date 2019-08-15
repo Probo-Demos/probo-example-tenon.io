@@ -19,6 +19,7 @@ steps:
     plugin: Script
     script: |
       vendor/drush/drush/drush site-install -y --root=/var/www/html standard --db-url='mysqli://root:strongpassword@localhost/drupal'
+      chown -R www-data:www-data /src/web/sites/default/files
   - name: Generate login link.
     plugin: Script
     script: |
