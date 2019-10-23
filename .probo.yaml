@@ -18,13 +18,13 @@ steps:
   - name: Install Drupal site.
     plugin: Script
     script: |
-      vendor/drush/drush/drush site-install -y --root=/var/www/html standard --db-url='mysqli://root:strongpassword@localhost/drupal'
+      vendor/drush/drush/drush site-install -y --root=/var/www/html demo_umami --db-url='mysqli://root:strongpassword@localhost/drupal'
       chown -R www-data:www-data /src/web/sites/default/files
   - name: Generate login link.
     plugin: Script
     script: |
       vendor/drush/drush/drush uli
-  - name: Tenon.io test
+  - name: Tenon.io test.
     plugin: Script
     script: |
       source /assets/.ENV > /dev/null 2>&1
