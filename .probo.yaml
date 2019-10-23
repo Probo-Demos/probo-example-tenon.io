@@ -24,7 +24,7 @@ steps:
     plugin: Script
     script: |
       vendor/drush/drush/drush uli
-  - name: Tenon.io test
+  - name: Tenon.io test.
     plugin: Script
     script: |
       source /assets/.ENV > /dev/null 2>&1
